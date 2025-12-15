@@ -16,9 +16,6 @@
 
 ```bash
 composer require ritechoice23/laravel-worldable
-
-# Install world data (countries, currencies, cities, etc.)
-php artisan world:install --all
 ```
 
 **That's it!** You now have access to 8 world entities: Continents, Subregions, Countries, States, Cities, Currencies, Languages, and Timezones.
@@ -84,11 +81,11 @@ User::wherePricedIn('USD')->get();
 
 **Why use polymorphic relationships?**
 
-- **Zero migrations** - No need to modify your existing tables  
-- **Multiple contexts** - Separate billing/shipping, citizenship/residence  
-- **Flexible** - Attach multiple countries, cities, or currencies to one model  
-- **Metadata support** - Store extra data on relationships  
-- **Clean codebase** - No foreign key clutter in your models
+-   **Zero migrations** - No need to modify your existing tables
+-   **Multiple contexts** - Separate billing/shipping, citizenship/residence
+-   **Flexible** - Attach multiple countries, cities, or currencies to one model
+-   **Metadata support** - Store extra data on relationships
+-   **Clean codebase** - No foreign key clutter in your models
 
 ## Installation Options
 
@@ -108,18 +105,18 @@ php artisan world:install --worldables
 
 ## Key Features
 
-| Feature              | Description                                                                    |
-| -------------------- | ------------------------------------------------------------------------------ |
+| Feature              | Description                                                                         |
+| -------------------- | ----------------------------------------------------------------------------------- |
 | **8 World Entities** | Continents, Subregions, Countries, States, Cities, Currencies, Languages, Timezones |
-| **Modular Install**  | Install only what you need, add more later                                     |
-| **Two Usage Modes**  | Traditional foreign keys OR polymorphic relationships                          |
-| **Context Groups**   | Separate billing/shipping, citizenship/residence                               |
-| **Smart Resolution** | Accepts IDs, names, ISO codes automatically                                    |
-| **Query Scopes**     | `whereFrom()`, `whereLocatedInCity()`, `wherePricedIn()`, `whereSpeaks()`      |
-| **Money Formatting** | `$product->formatMoney(100)` → "$100.00" with locale support                   |
-| **Bulk Operations**  | `$user->attachCountries(['NG', 'GH', 'KE'])`                                   |
-| **Custom Metadata**  | Store extra data: `$user->attachCountry('NG', 'billing', ['tax_id' => '...'])` |
-| **Health Checks**    | `php artisan world:health --detailed` monitors data integrity                  |
+| **Modular Install**  | Install only what you need, add more later                                          |
+| **Two Usage Modes**  | Traditional foreign keys OR polymorphic relationships                               |
+| **Context Groups**   | Separate billing/shipping, citizenship/residence                                    |
+| **Smart Resolution** | Accepts IDs, names, ISO codes automatically                                         |
+| **Query Scopes**     | `whereFrom()`, `whereLocatedInCity()`, `wherePricedIn()`, `whereSpeaks()`           |
+| **Money Formatting** | `$product->formatMoney(100)` → "$100.00" with locale support                        |
+| **Bulk Operations**  | `$user->attachCountries(['NG', 'GH', 'KE'])`                                        |
+| **Custom Metadata**  | Store extra data: `$user->attachCountry('NG', 'billing', ['tax_id' => '...'])`      |
+| **Health Checks**    | `php artisan world:health --detailed` monitors data integrity                       |
 
 ## Real-World Example
 
@@ -153,16 +150,16 @@ if ($order->hasCountry('United States', 'billing')) {
 
 **[Full Documentation](docs/)** - Deep dive into all features
 
-- [Installation](docs/installation.md) - Advanced installation options
-- [Commands](docs/commands.md) - Complete commands reference
-- [Basic Usage](docs/basic-usage.md) - Common operations
-- [API Reference](docs/api-reference.md) - Complete API documentation
-- [Countries](docs/countries.md), [States](docs/states.md), [Cities](docs/cities.md) - Location data
-- [Currencies](docs/currencies.md), [Languages](docs/languages.md), [Timezones](docs/timezones.md) - Localization
-- [Groups](docs/groups.md) - Context-aware relationships
-- [Meta Data](docs/meta-data.md) - Custom metadata storage
-- [Validation Rules](docs/validation-rules.md) - Input validation
-- [Scopes](docs/scopes.md) - Query scopes reference
+-   [Installation](docs/installation.md) - Advanced installation options
+-   [Commands](docs/commands.md) - Complete commands reference
+-   [Basic Usage](docs/basic-usage.md) - Common operations
+-   [API Reference](docs/api-reference.md) - Complete API documentation
+-   [Countries](docs/countries.md), [States](docs/states.md), [Cities](docs/cities.md) - Location data
+-   [Currencies](docs/currencies.md), [Languages](docs/languages.md), [Timezones](docs/timezones.md) - Localization
+-   [Groups](docs/groups.md) - Context-aware relationships
+-   [Meta Data](docs/meta-data.md) - Custom metadata storage
+-   [Validation Rules](docs/validation-rules.md) - Input validation
+-   [Scopes](docs/scopes.md) - Query scopes reference
 
 ## Testing
 
@@ -172,10 +169,9 @@ composer test
 
 ## Credits
 
-- [Daramola Babatunde Ebenezer](https://github.com/ritechoice23)
-- [All Contributors](../../contributors)
+-   [Daramola Babatunde Ebenezer](https://github.com/ritechoice23)
+-   [All Contributors](../../contributors)
 
 ## License
 
 The MIT License (MIT). See [License File](LICENSE.md).
-
