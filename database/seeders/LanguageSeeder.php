@@ -31,13 +31,13 @@ class LanguageSeeder extends Seeder
      */
     public function run(): void
     {
-        $this->command?->info('Fetching language data from remote source...');
+        $this->command->info('Fetching language data from remote source...');
 
         try {
             $response = Http::timeout(30)->get($this->languageDataUrl);
 
             if (! $response->successful()) {
-                $this->command?->error('Failed to fetch language data. HTTP Status: '.$response->status());
+                $this->command->error('Failed to fetch language data. HTTP Status: '.$response->status());
 
                 return;
             }
@@ -45,7 +45,7 @@ class LanguageSeeder extends Seeder
             $languagesData = $response->json();
 
             if (empty($languagesData)) {
-                $this->command?->error('No language data found in the response.');
+                $this->command->error('No language data found in the response.');
 
                 return;
             }
@@ -66,9 +66,9 @@ class LanguageSeeder extends Seeder
                 $count++;
             }
 
-            $this->command?->info("Seeded {$count} languages successfully.");
+            $this->command->info("Seeded {$count} languages successfully.");
         } catch (\Exception $e) {
-            $this->command?->error('Error fetching or processing language data: '.$e->getMessage());
+            $this->command->error('Error fetching or processing language data: '.$e->getMessage());
         }
     }
 }

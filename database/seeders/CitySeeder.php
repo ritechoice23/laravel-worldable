@@ -35,45 +35,45 @@ class CitySeeder extends Seeder
 
         $url = 'https://raw.githubusercontent.com/ritechoice23/countries-states-cities-database/master/json/cities.json.gz';
 
-        $this->command?->info('📥 Downloading cities data from GitHub...');
-        $this->command?->comment('   This may take a while depending on your connection speed.');
-        $this->command?->newLine();
+        $this->command->info('📥 Downloading cities data from GitHub...');
+        $this->command->comment('   This may take a while depending on your connection speed.');
+        $this->command->newLine();
 
         try {
             $response = Http::timeout(self::HTTP_TIMEOUT)->get($url);
 
             if (! $response->successful()) {
-                $this->command?->error('Failed to fetch cities data from GitHub. HTTP Status: '.$response->status());
+                $this->command->error('Failed to fetch cities data from GitHub. HTTP Status: '.$response->status());
 
                 return;
             }
 
             $downloadSize = strlen($response->body());
-            $this->command?->info('✓ Downloaded '.number_format($downloadSize / 1024 / 1024, 2).' MB (compressed)');
-            $this->command?->newLine();
+            $this->command->info('✓ Downloaded '.number_format($downloadSize / 1024 / 1024, 2).' MB (compressed)');
+            $this->command->newLine();
 
-            $this->command?->info('📦 Decompressing cities data...');
+            $this->command->info('📦 Decompressing cities data...');
 
             $decompressed = gzdecode($response->body());
 
             if ($decompressed === false) {
-                $this->command?->error('Failed to decompress cities data.');
+                $this->command->error('Failed to decompress cities data.');
 
                 return;
             }
 
             $decompressedSize = strlen($decompressed);
-            $this->command?->info('✓ Decompressed '.number_format($decompressedSize / 1024 / 1024, 2).' MB');
-            $this->command?->newLine();
+            $this->command->info('✓ Decompressed '.number_format($decompressedSize / 1024 / 1024, 2).' MB');
+            $this->command->newLine();
 
-            $this->command?->info('📄 Processing cities data with streaming parser...');
-            $this->command?->comment('   Using memory-efficient streaming to handle large datasets...');
-            $this->command?->newLine();
+            $this->command->info('📄 Processing cities data with streaming parser...');
+            $this->command->comment('   Using memory-efficient streaming to handle large datasets...');
+            $this->command->newLine();
 
             $this->seedCitiesStreaming($decompressed);
 
         } catch (\Exception $e) {
-            $this->command?->error('Error: '.$e->getMessage());
+            $this->command->error('Error: '.$e->getMessage());
 
             return;
         }
@@ -92,12 +92,12 @@ class CitySeeder extends Seeder
         $citiesTable = config('worldable.tables.cities', 'world_cities');
 
         // First pass: count items for progress bar
-        $this->command?->info('📊 Counting cities...');
+        $this->command->info('📊 Counting cities...');
         $totalCount = substr_count($jsonData, '"name"');
-        $this->command?->info('   Found approximately '.number_format($totalCount).' cities');
-        $this->command?->newLine();
+        $this->command->info('   Found approximately '.number_format($totalCount).' cities');
+        $this->command->newLine();
 
-        $bar = $this->command?->getOutput()->createProgressBar($totalCount);
+        $bar = $this->command->getOutput()->createProgressBar($totalCount);
         $bar->start();
 
         $inserted = 0;
@@ -196,20 +196,20 @@ class CitySeeder extends Seeder
         }
 
         $bar->finish();
-        $this->command?->newLine(2);
+        $this->command->newLine(2);
 
-        $this->command?->info('✓ Seeded '.number_format($inserted).' cities successfully.');
+        $this->command->info('✓ Seeded '.number_format($inserted).' cities successfully.');
 
         if ($orphanedCountry > 0) {
-            $this->command?->warn('⚠ '.number_format($orphanedCountry).' cities without country links (countries not installed).');
+            $this->command->warn('⚠ '.number_format($orphanedCountry).' cities without country links (countries not installed).');
         }
 
         if ($orphanedState > 0) {
-            $this->command?->warn('⚠ '.number_format($orphanedState).' cities without state links (states not installed).');
+            $this->command->warn('⚠ '.number_format($orphanedState).' cities without state links (states not installed).');
         }
 
         if ($orphanedCountry > 0 || $orphanedState > 0) {
-            $this->command?->info("ℹ Run 'php artisan world:link' after installing dependencies to establish relationships.");
+            $this->command->info("ℹ Run 'php artisan world:link' after installing dependencies to establish relationships.");
         }
 
         // Free memory
@@ -220,7 +220,7 @@ class CitySeeder extends Seeder
     {
         $countriesTable = config('worldable.tables.countries', 'world_countries');
 
-        $this->command?->info('Building country lookup map...');
+        $this->command->info('Building country lookup map...');
 
         return DB::table($countriesTable)
             ->pluck('id', 'iso_code')
@@ -231,7 +231,7 @@ class CitySeeder extends Seeder
     {
         $statesTable = config('worldable.tables.states', 'world_states');
 
-        $this->command?->info('Building state lookup map...');
+        $this->command->info('Building state lookup map...');
 
         $states = DB::table($statesTable)
             ->select('id', 'country_id', 'code')
@@ -267,7 +267,7 @@ class CitySeeder extends Seeder
         try {
             DB::table($table)->insertOrIgnore($batch);
         } catch (\Exception $e) {
-            $this->command?->error('Batch insert failed: '.$e->getMessage());
+            $this->command->error('Batch insert failed: '.$e->getMessage());
         }
     }
 }

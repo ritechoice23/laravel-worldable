@@ -31,13 +31,13 @@ class CurrencySeeder extends Seeder
      */
     public function run(): void
     {
-        $this->command?->info('Fetching currency data from remote source...');
+        $this->command->info('Fetching currency data from remote source...');
 
         try {
             $response = Http::timeout(30)->get($this->currencyDataUrl);
 
             if (! $response->successful()) {
-                $this->command?->error('Failed to fetch currency data. HTTP Status: '.$response->status());
+                $this->command->error('Failed to fetch currency data. HTTP Status: '.$response->status());
 
                 return;
             }
@@ -45,7 +45,7 @@ class CurrencySeeder extends Seeder
             $currenciesData = $response->json();
 
             if (empty($currenciesData)) {
-                $this->command?->error('No currency data found in the response.');
+                $this->command->error('No currency data found in the response.');
 
                 return;
             }
@@ -66,9 +66,9 @@ class CurrencySeeder extends Seeder
                 $count++;
             }
 
-            $this->command?->info("Seeded {$count} currencies successfully.");
+            $this->command->info("Seeded {$count} currencies successfully.");
         } catch (\Exception $e) {
-            $this->command?->error('Error fetching or processing currency data: '.$e->getMessage());
+            $this->command->error('Error fetching or processing currency data: '.$e->getMessage());
         }
     }
 }

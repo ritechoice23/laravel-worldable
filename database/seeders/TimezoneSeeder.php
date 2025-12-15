@@ -115,7 +115,7 @@ class TimezoneSeeder extends Seeder
 
         $timezonesTable = config('worldable.tables.timezones', 'world_timezones');
 
-        $this->command?->info('Seeding '.count($timezones).' timezones...');
+        $this->command->info('Seeding '.count($timezones).' timezones...');
 
         foreach ($timezones as $timezone) {
             DB::table($timezonesTable)->insertOrIgnore([
@@ -129,6 +129,6 @@ class TimezoneSeeder extends Seeder
             ]);
         }
 
-        $this->command?->info('Seeded '.count($timezones).' timezones successfully.');
+        $this->command->info('Seeded '.count($timezones).' timezones successfully.');
     }
 }

@@ -95,10 +95,10 @@ class WorldInstallCommand extends Command
 
         // Show which components can be linked
         $this->comment('The following components have dependencies that can be linked:');
-        foreach ($linkableComponents as $component) {
+        foreach (array_keys($linkableComponents) as $component) {
             $deps = $this->dependencies[$component] ?? [];
             $installedDeps = array_filter($deps, fn ($dep) => isset($installedComponents[$dep]));
-            if (count($installedDeps) > 0) {
+            if (! empty($installedDeps)) {
                 $this->line("  • {$component} → ".implode(', ', $installedDeps));
             }
         }

@@ -25,32 +25,32 @@ class CountrySeeder extends Seeder
         ini_set('memory_limit', '512M');
         set_time_limit(0);
 
-        $this->command?->info('📥 Downloading countries data from GitHub...');
-        $this->command?->newLine();
+        $this->command->info('📥 Downloading countries data from GitHub...');
+        $this->command->newLine();
 
         $jsonUrl = 'https://raw.githubusercontent.com/ritechoice23/countries-states-cities-database/master/json/countries.json';
         $jsonContent = file_get_contents($jsonUrl);
 
         if ($jsonContent === false) {
-            $this->command?->error('Failed to download countries data');
+            $this->command->error('Failed to download countries data');
 
             return;
         }
 
         $downloadSize = strlen($jsonContent);
-        $this->command?->info('✓ Downloaded '.number_format($downloadSize / 1024, 2).' KB');
-        $this->command?->newLine();
+        $this->command->info('✓ Downloaded '.number_format($downloadSize / 1024, 2).' KB');
+        $this->command->newLine();
 
         // Count countries for progress bar
         $totalCount = substr_count($jsonContent, '"name"');
-        $this->command?->info('📊 Processing approximately '.number_format($totalCount).' countries...');
-        $this->command?->newLine();
+        $this->command->info('📊 Processing approximately '.number_format($totalCount).' countries...');
+        $this->command->newLine();
 
         $continentsInstalled = DB::table('world_continents')->exists();
         $subregionsInstalled = DB::table('world_subregions')->exists();
 
-        $progress = $this->command?->getOutput()->createProgressBar($totalCount);
-        $progress?->start();
+        $progress = $this->command->getOutput()->createProgressBar($totalCount);
+        $progress->start();
 
         $inserted = 0;
         $orphanedContinent = 0;
@@ -142,7 +142,7 @@ class CountrySeeder extends Seeder
                                 $orphanedSubregion++;
                             }
 
-                            $progress?->advance();
+                            $progress->advance();
                         }
 
                         $currentCountry = '';
@@ -156,20 +156,20 @@ class CountrySeeder extends Seeder
         }
 
         unset($jsonContent);
-        $progress?->finish();
-        $this->command?->newLine(2);
-        $this->command?->info("✓ Successfully seeded {$inserted} countries");
+        $progress->finish();
+        $this->command->newLine(2);
+        $this->command->info("✓ Successfully seeded {$inserted} countries");
 
         if ($orphanedContinent > 0) {
-            $this->command?->warn("⚠ {$orphanedContinent} countries without continent links (continents not installed)");
+            $this->command->warn("⚠ {$orphanedContinent} countries without continent links (continents not installed)");
         }
 
         if ($orphanedSubregion > 0) {
-            $this->command?->warn("⚠ {$orphanedSubregion} countries without subregion links (subregions not installed)");
+            $this->command->warn("⚠ {$orphanedSubregion} countries without subregion links (subregions not installed)");
         }
 
         if ($orphanedContinent > 0 || $orphanedSubregion > 0) {
-            $this->command?->info("ℹ Run 'php artisan world:link' after installing dependencies to establish relationships.");
+            $this->command->info("ℹ Run 'php artisan world:link' after installing dependencies to establish relationships.");
         }
     }
 }
