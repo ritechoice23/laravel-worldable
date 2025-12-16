@@ -20,6 +20,22 @@ composer require ritechoice23/laravel-worldable
 
 **That's it!** You now have access to 8 world entities: Continents, Subregions, Countries, States, Cities, Currencies, Languages, and Timezones.
 
+## Installation Options
+
+```bash
+# Install everything (all world data + polymorphic support)
+php artisan world:install --all
+
+# Install specific components only
+php artisan world:install --countries --currencies
+
+# Add polymorphic support later
+php artisan world:install --worldables
+
+# Uninstall any component you don't need again
+php artisan world:uninstall
+```
+
 ### Optional: Publish Configuration
 
 If you need to customize table names, publish the config file:
@@ -30,7 +46,7 @@ php artisan vendor:publish --tag=worldable-config
 
 This creates `config/worldable.php` where you can customize table names to match your naming convention.
 
-## Two Ways to Use World Data
+## Usage Modes
 
 ### 1. Direct Model Usage (Traditional Approach)
 
@@ -86,22 +102,6 @@ User::wherePricedIn('USD')->get();
 -   **Flexible** - Attach multiple countries, cities, or currencies to one model
 -   **Metadata support** - Store extra data on relationships
 -   **Clean codebase** - No foreign key clutter in your models
-
-## Installation Options
-
-```bash
-# Install everything (all world data + polymorphic support)
-php artisan world:install --all
-
-# Install specific components only
-php artisan world:install --countries --currencies
-
-# Install world data WITHOUT polymorphic support
-php artisan world:install --countries --states --cities
-
-# Add polymorphic support later
-php artisan world:install --worldables
-```
 
 ## Key Features
 
